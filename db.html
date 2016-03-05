@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <style>
+		 body {
+            background-color: seashell;
+            background-position: center 1em;
+            font: 20px/2 "Lucida Sans Unicode", Verdana, sans-serif;
+            font-variant: small-caps;
+        }
+		.reset {
+			-webkit-appearance: none; 
+		}
+		input[type=submit] {
+            width: 160px;
+            height: 60px;
+            font-style: black;
+            border-width: 1px;
+            border-color: red;
+            background: seashell;
+            font: 20px/2 "Lucida Sans Unicode", Verdana, sans-serif;
+            font-variant: small-caps;
+		}
+		input[type=search] {
+			-webkit-appearance: searchfield;
+			font-size: 20px;
+			text-align: left;
+			border-color: red;
+			border-width: 1px;
+			width: 410px;
+			height: 32px;
+			margin: 5px;
+		}
+        table,
+        td,
+        th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 80%;
+			margin: 0 auto;
+        }
+        
+        th,
+        td {
+            padding: 15px;
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#POKE").submit(function(event) {
+                event.preventDefault();
+            });
+
+
+            $("#ads").click(function() {
+                var formData = {
+                    Name: $("input[name='xxx']").val(),
+                    Evolution: $("input[name='zzz']").val(),
+                    Elements: $("input[name='ccc']").val()
+                };
+                $.ajax({
+                        type: "POST",
+                        url: "nn.php",
+                        data: formData,
+                        dataType: "json"
+                    })
+                    .done(function(res) {
+                        $("#wtfbro").append("<hr></hr><table id='tb'><tr><th>Name</th><th>Evolution</th><th>Elements</th></tr></table>");
+                        $.each(res, function(i, v) {
+                            $("#tb").append("<tr><td>" + v["Name"] + "</td><td>" + v["Evolution"] + "</td><td>" + v["Elements"] + "</td></tr>");
+                        })
+                    })
+            })
+        });
+    </script>
+</head>
+
+<body>
+
+    <form id="POKE">
+		   <hr>
+        <input type="search" name="xxx" id="xxx" class="reset" placeholder="Name of Pokemon"></input><br>
+        <input type="search" name="zzz" id="zzz" class="reset" placeholder="Evolution of Pokemon"></input><br>
+		<input type="search" name="ccc" id="ccc" class="reset" placeholder="Elements Pokemon are using"></input><br>
+		   <hr>
+        <input type="submit" id="ads" value="Send"></input>
+		<input type="submit" value="Edit" disabled></input>
+		<input type="submit" value="Delete" disabled></input>
+    </form>
+    <div id="wtfbro"></div>
+	<hr>
+</body>
+
+</html>
