@@ -35,8 +35,8 @@
 		  	var learnerName = myAPI.GetValue('cmi.learner_name');
 		  	document.querySelector('h1').innerHTML += ' для ' + learnerName + '...';
 				$("body").keyup(function(){
-					n++;
 		    	  	if($("section").hasClass("slide active")){
+					n++;
 		    	  		if(n == 5){
 		    	  			setTimeout(function(){
 		    				    if( $('input[name=scd]').val() == 'Yes' && $('input[name=fst]').val() == 'Yes'){
