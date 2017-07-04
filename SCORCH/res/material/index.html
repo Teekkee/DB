@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Material theme for Shower</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="styles/screen-16x10.css">
+	<style type="text/css">
+		.slide{background:linear-gradient(45deg, #EECFBA, #C5DDE8)}
+		.progress{background:red}
+		h2 {text-align: center}
+		#success {background: rgba(0,255,0,0.5);font:bold 100px sans-serif; text-align: center; padding: 50px;
+        position: fixed; left: 5%; width: 80%; top: 5%; height: 80%; display:none }
+	</style>
+	<script src="../apiwrapper10.js"></script>
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		var n = 0;
+		var ballz = 1;
+
+		//Well, it's not working as I'd like to.
+		function checkthis(name){
+			$('input[name='+name+']').click(function(){
+				if(this.checked){
+					return this.value;
+				}
+			});
+		};
+
+		$(function(){
+		  	myAPI.Initialize('');
+		  	var learnerName = myAPI.GetValue('cmi.learner_name');
+		  	document.querySelector('h1').innerHTML += ' для ' + learnerName + '...';
+				$("body").keyup(function(){
+					n++;
+		    	  	if($("section").hasClass("slide active")){
+		    	  		if(n == 5){
+		    	  			setTimeout(function(){
+		    				    if( $('input[name=scd]').val() == 'Yes' && $('input[name=fst]').val() == 'Yes'){
+			    	  				myAPI.SetValue('cmi.score.raw', 100);
+							    	myAPI.SetValue('cmi.score.scaled', 100);
+							    	myAPI.SetValue('cmi.completion_status', 'completed');
+							    	myAPI.SetValue('cmi.success_status', 'passed');
+							    	myAPI.Terminate('');
+			    	  			}else{
+			    	  				myAPI.SetValue('cmi.score.raw', 80);
+							    	myAPI.SetValue('cmi.score.scaled', 80);
+							    	myAPI.SetValue('cmi.completion_status', 'completed');
+							    	myAPI.SetValue('cmi.success_status', 'passed');
+							    	myAPI.Terminate('');
+			    	  			}
+			    	  		},15000);
+						}else{
+							ballz += 2**n;
+							var garde = ballz/((2**6)-1)*100;
+							console.log('SCORM test passed on '+garde+'%');
+						} 
+		    	  	}
+				});
+		});
+
+		//]]>
+	</script>
+</head>
+<body class="shower list">
+	<h1>Упражнение </h1>
+	<header class="caption">
+		<h1>Minimalistic</h1>
+		<p>by Haru</p>
+	</header>
+	<section class="slide" id="cover">
+		<h2>Presentation</h2>
+	</section>
+	<section class="slide">
+		<h2>Slide #0</h2>
+	</section>
+	<section class="slide">
+		<h2>Slide #1</h2>
+	</section>
+	<section class="slide">
+		<h2>Slide #2</h2>
+	</section>
+	<section class="slide">
+		<h2>Slide #3</h2>
+	</section>
+	<section class="slide">
+		<h2>The End!</h2>
+	</section>
+	<section class="slide">
+		<h4>Gay test.</h4><br><p>Are you gay?</p><label><input type="radio" name="fst" checked="checked" value="Yes"/>Yes</label><br><label><input type="radio" name="fst" value="No"/>Yes</label><br><p>Okay naggets, I wanna see six hot loads.</p><label><input type="radio" name="scd" checked="checked" value="Yes"/>Yes,sir!</label><br><label><input type="radio" name="scd" value="No"/>No,sir!</label>
+	</section>
+	<div class="progress"></div>
+	<footer class="badge">
+		<a href="https://github.com/shower/shower">
+			<svg viewBox="0 0 81 79" aria-hidden="true">
+				<path d="M40.5 0a40.5 40.5 0 0 0-12.8 78.93c2 .37 2.76-.88 2.76-2s0-3.51-.05-6.89c-11.27 2.45-13.64-5.43-13.64-5.43-1.84-4.68-4.5-5.92-4.5-5.92-3.68-2.51.28-2.46.28-2.46 4.06.29 6.2 4.17 6.2 4.17 3.61 6.19 9.48 4.4 11.79 3.37a8.65 8.65 0 0 1 2.57-5.41c-9-1-18.45-4.5-18.45-20a15.65 15.65 0 0 1 4.17-10.87 14.57 14.57 0 0 1 .4-10.72s3.4-1.09 11.14 4.15a38.39 38.39 0 0 1 20.28 0c7.73-5.24 11.13-4.15 11.13-4.15a14.55 14.55 0 0 1 .4 10.72 15.63 15.63 0 0 1 4.16 10.87c0 15.56-9.47 19-18.49 20 1.45 1.25 2.75 3.72 2.75 7.5v11.11c0 1.08.73 2.34 2.78 1.95A40.51 40.51 0 0 0 40.5 0z"/>
+			</svg>
+			Fork me<br>on GitHub
+		</a>
+	</footer>
+	<script src="../shower.min.js"></script>
+	<!-- Copyright © 2016 Yours Truly, Famous Inc. -->
+</body>
+</html>
